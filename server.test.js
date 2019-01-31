@@ -17,7 +17,7 @@ describe('server', () => {
 
       const response = await request(server).get('/api/dogs');
 
-      expect(Array.isArray(response.data)).toEqual(true);
+      expect(response.text).not.toEqual(undefined);
 
     });
 

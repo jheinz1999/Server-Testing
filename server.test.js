@@ -41,6 +41,43 @@ describe('server', () => {
 
     });
 
+    it('should return status code of 500 if duplicate is entered', async () => {
+
+      await request(server).post('/api/dogs', {name: 'Rad Dog'});
+      const response = await request(server).post('/api/dogs', {name: 'Rad Dog'});
+
+      expect(response.status).toEqual(500);
+
+    });
+
+  });
+
+  describe('DELETE /api/dogs/id', async () => {
+
+    it('should return status code 200 upon successful deletion', async () => {
+
+      const response = await request(server).delete('/api/dogs/1');
+
+      expect(response.status).toEqual(200);
+
+    });
+
+    it('should return id of deleted dog', async () => {
+
+      const response = await request(server).delete('/api/dogs/1');
+
+      expect(response.data.id).not.toBe(null);
+
+    });
+
+    it('should return status code 404 if dog does not exist', async () => {
+
+      const response = await request(server).delete('/api/dogs/1000');
+
+      expect(response.status).toEqual(404);
+
+    });
+
   });
 
 });

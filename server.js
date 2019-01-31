@@ -42,4 +42,25 @@ server.post('/api/dogs', (req, res) => {
 
 });
 
+server.delete('/api/dogs/:id', (req, res) => {
+
+  const id = req.params.id;
+
+  let index = dogs.find(dog => dog.id == id);
+
+  console.log(index);
+
+  if (index === undefined) {
+
+    res.status(404).json({message: 'not found'});
+    return;
+
+  }
+
+  dogs.splice(index, 0);
+
+  res.status(200).json({ id });
+
+});
+
 module.exports = server;

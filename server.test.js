@@ -64,7 +64,7 @@ describe('server', () => {
 
     it('should return status code 200 upon successful deletion', async () => {
 
-      const response = await request(server).delete('/api/dogs/1');
+      const response = await request(server).delete('/api/dogs/2');
 
       expect(response.status).toEqual(200);
 
@@ -74,7 +74,7 @@ describe('server', () => {
 
       const response = await request(server).delete('/api/dogs/1');
 
-      expect(response.data.id).not.toBe(null);
+      expect(response.body.id).not.toBe(null);
 
     });
 

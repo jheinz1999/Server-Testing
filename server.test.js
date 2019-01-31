@@ -27,7 +27,7 @@ describe('server', () => {
 
     it('should return status code of 201', async () => {
 
-      const response = await request(server).post('/api/dogs', { name: 'Poodle' });
+      const response = await request(server).post('/api/dogs').send({ name: 'Poodle' });
 
       expect(response.status).toEqual(201);
 
@@ -35,18 +35,26 @@ describe('server', () => {
 
     it('should return the id of the newly created dog', async () => {
 
-      const response = await request(server).post('/api/dogs', { name: 'German Shepherd'});
+      const response = await request(server).post('/api/dogs').send({ name: 'German Shepherd'});
 
-      expect(response.data.id).not.toEqual(null);
+      expect(response.body.id).not.toEqual(null);
 
     });
 
     it('should return status code of 500 if duplicate is entered', async () => {
 
-      await request(server).post('/api/dogs', {name: 'Rad Dog'});
-      const response = await request(server).post('/api/dogs', {name: 'Rad Dog'});
+      await request(server).post('/api/dogs').send({name: 'Rad Dog'});
+      const response = await request(server).post('/api/dogs').send({name: 'Rad Dog'});;
 
       expect(response.status).toEqual(500);
+
+    });
+
+    it('should return status code of 400 if no name is provided', async () => {
+
+      const response = await request(server).post('/api/dogs', {dog: 'A cool dog'});
+
+      expect(response.status).toEqual(400);
 
     });
 
